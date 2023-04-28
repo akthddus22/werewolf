@@ -20,11 +20,11 @@ export const makeMessage = pongData => {
 
     switch (type) {
         case SOCKET_EVENT.JOIN_ROOM: {
-            contentLabel = "${nickname} has join the room.";
+            contentLabel = `${nickname} has join the room.`;
             break;
         }
         case SOCKET_EVENT.UPDATE_NICKNAME: {
-            contentLabel = "User's name has been changed.\n${prevNickname} => ${nickname}."
+            contentLabel = `User's name has been changed.\n${prevNickname} => ${nickname}.`
             break;
         }
         case SOCKET_EVENT.SEND_MESSAGE: {

@@ -12,7 +12,7 @@ module.exports = function(socketio) {
         console.log("socket connection succeeded");
 
         socket.on("disconnect", reason => {
-            console.log('disconnect:${reason}');
+            console.log(`disconnect:${reason}`);
         });
 
         socket.on(SOCKET_EVENT.JOIN_ROOM, requestData => {
@@ -24,7 +24,7 @@ module.exports = function(socketio) {
             };
 
             socketio.to(roomName).emit(SOCKET_EVENT.RECEIVE_MESSAGE, responseData);
-            console.log("${SOCKET_EVENT.JOIN_ROOM} is fired with data:${JSON.stringify(responseData)}");
+            console.log(`${SOCKET_EVENT.JOIN_ROOM} is fired with data:${JSON.stringify(responseData)}`);
         });
 
         socket.on(SOCKET_EVENT.UPDATE_NICKNAME, requestData => {
@@ -34,7 +34,7 @@ module.exports = function(socketio) {
                 time: new Date(),
             };
             socketio.to(roomName).emit(SOCKET_EVENT.RECEIVE_MESSAGE, responseData);
-            console.log("${SOCKET_EVENT.UPDATE_NICKNAME} is fired with data: ${JSON.stringify(responseData)}");
+            console.log(`${SOCKET_EVENT.UPDATE_NICKNAME} is fired with data: ${JSON.stringify(responseData)}`);
         });
 
         socket.on(SOCKET_EVENT.SEND_MESSAGE, requestData => {
@@ -44,7 +44,7 @@ module.exports = function(socketio) {
                 time: new Date(),
             };
             socketio.to(roomName).emit(SOCKET_EVENT.RECEIVE_MESSAGE, responseData);
-            console.log("${SOCKET_EVENT.SEND_MESSAGE} is fired with data: ${JSON.stringify(respondeData)}");
+            console.log(`${SOCKET_EVENT.SEND_MESSAGE} is fired with data: ${JSON.stringify(responseData)}`);
         });
 
     });
