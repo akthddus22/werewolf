@@ -9,7 +9,7 @@ export const SOCKET_EVENT = {
     RECEIVE_MESSAGE: "RECEIVE_MESSAGE",
 };
 
-export const socket = socketIo(String(process.env.REACT_APP_BACK_URL), { withCredentials: true });
+export const socket = socketIo(String(process.env.REACT_APP_BACK_URL));
 export const SocketContext = createContext(socket);
 
 export const makeMessage = pongData => {
