@@ -16,10 +16,6 @@ function App() {
   }, []);*/
 
   useEffect(() => {
-    socket.emit(SOCKET_EVENT.JOIN_ROOM, { nickname });
-  }, [nickname]);
-
-  useEffect(() => {
     if (prevNickname.current) {
       socket.emit(SOCKET_EVENT.UPDATE_NICKNAME, {
         prevNickname: prevNickname.current,
