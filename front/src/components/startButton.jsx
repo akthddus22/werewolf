@@ -1,9 +1,17 @@
 import styled from "styled-components";
-import React from "react";
+import React, { useState, useCallback, useContext } from "react";
+import { SocketContext, SOCKET_EVENT } from "./../service/socket";
 
-function startButton({disabled, children}) {
-    return <StyledButton disabled={disabled}>Start</StyledButton>;
+function StartButton({ nickname }) {
+    const socket = useContext(SocketContext);
+
+    const send = useCallback(() => {
+        socket.emit(SOCKET_EVENT.START_GAME, { nickname });
+    })
+
+    return <StyledButton onClick={send}>Start</StyledButton>;
 }
+
 
 const StyledButton = styled.button`
   margin: 0;
@@ -28,3 +36,5 @@ const StyledButton = styled.button`
     background: var(--button-bg-color, #025ce2);
   }
 `;
+
+export default StartButton;
