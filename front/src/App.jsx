@@ -6,11 +6,16 @@ import ChatRoom from "./components/chatRoom";
 import StartButton from "./components/startButton";
 import UseAbility from "./components/useAbility";
 import Vote from "./components/vote";
+import "./App.css";
 
 function App() {
 
   const prevNickname = useRef(null);
   const [nickname, setNickname] = useState("마송연");
+
+  const [chatWidth, setChatWidth] = useState(1000);
+  const [dragging, setDragging] = useState(false); // 드래그 여부 추적
+  const [initialX, setInitialX] = useState(0); // 클릭 시 초기 X 좌표 저장
 
   /*useEffect(() => {
     return () => {
@@ -52,15 +57,51 @@ function App() {
       nickname: newNickname, //nickname,
     });
   }, [nickname]);
+
+  const handleDividerClick = useCallback((e) => {
+    setDragging(true); // 드래그 상태로 설정
+    setInitialX(e.clientX); // 클릭 시 초기 X 좌표 저장
+  }, []);
+
+  const handleMouseMove = useCallback((e) => {
+    if (dragging) {
+      const newWidth = chatWidth - e.clientX + initialX; // 현재 너비에서 이동 거리를 더하여 새로운 너비 계산
+      const minWidth = 500; // 최소 너비 (500px로 설정)
+
+      // 최소 너비 제한 조건 처리
+      const clampedWidth = Math.max(minWidth, newWidth);
+
+      setChatWidth(clampedWidth);
+      setInitialX(e.clientX); // 현재 X 좌표 저장
+    }
+  }, [chatWidth, dragging, initialX]);
+
+  const handleMouseUp = useCallback(() => {
+    setDragging(false); // 드래그 상태 종료
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("mousemove", handleMouseMove); // 마우스 이동 이벤트 리스너 추가
+    document.addEventListener("mouseup", handleMouseUp); // 마우스 업 이벤트 리스너 추가
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove); // 컴포넌트 언마운트 시 이벤트 리스너 제거
+      document.removeEventListener("mouseup", handleMouseUp); // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    };
+  }, [handleMouseMove, handleMouseUp]);
   
   return (
     <div>
     <SocketContext.Provider value={socket}>
-      <div className="d-flex flex-column justify-content-center align-items-center vh-100">
-        <NicknameForm handleSubmitNickname={handleSubmitNickname} />
-        <ChatRoom nickname={nickname}/>
-        <StartButton nickname={nickname}/>
+      <div id="rightscreen" style={{ width: chatWidth }}>
+        <div className="divider" onMouseDown={handleDividerClick}>
+        </div>
+        <div className="chatbox">
+          <NicknameForm handleSubmitNickname={handleSubmitNickname} />
+          <ChatRoom nickname={nickname}/>
+        </div>
       </div>
+    <StartButton nickname={nickname}/>
     </SocketContext.Provider>
     <UseAbility>aa</UseAbility>
     <Vote>aa</Vote>
