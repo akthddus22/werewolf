@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect, useContext, useRef } from "react";
 import { makeMessage, SocketContext, SOCKET_EVENT } from "./../service/socket";
 import MessageForm from "./MessageForm";
+import './message.css';
 
 function ChatRoom({ nickname }) {
   const [messages, setMessages] = useState([]);
@@ -35,12 +36,9 @@ function ChatRoom({ nickname }) {
   }, [socket, handleReceiveMessage]);
 
   return (
-    <div
-      className="d-flex flex-column"
-      style={{ width: 1000 }}
-    >
-      <div className="text-box">
-        <span>{nickname}</span> 님 환영합니다!
+    <div className="chatboxbox">
+      <div>
+        <span>{nickname}</span> 님 ddd환영합니다!
       </div>
       <div
         className="chat-window card"

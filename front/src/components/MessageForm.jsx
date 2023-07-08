@@ -2,6 +2,8 @@ import React, { useState, useCallback, useContext } from "react";
 
 import { SocketContext, SOCKET_EVENT } from "./../service/socket";
 
+import './message.css';
+
 function MessageForm({ nickname }) {
   const [typingMessage, setTypingMessage] = useState("");
   const socket = useContext(SocketContext);
